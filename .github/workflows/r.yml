@@ -1,11 +1,17 @@
-name: R
+name: R to GitHub Pages
 
 on:
   push:
     branches: [ "main" ]
   schedule:
     - cron: '0 23 * * *'
+  workflow_dispatch:
 
+env:
+  BASE_BRANCH_NAME: main
+  HOSTING_BRANCH_NAME: gh-pages
+  LOCAL_BRANCH_NAME: gh-pages-local
+  
 jobs:
     unit-test-job:
       name: run test job
@@ -15,5 +21,6 @@ jobs:
         - uses: r-lib/actions/setup-r@v2
           with:
               r-version: '4.2.2'
-        - run: Rscript -e 'install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/"); rmarkdown::render("Crypto.Rmd")'
+        - run: Rscript -e 'system("pip install pandoc"); install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/"); rmarkdown::render("Crypto.Rmd")'
+
 
