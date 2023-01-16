@@ -8,7 +8,6 @@ editor_options:
 
 ```{r, include=FALSE}
 source("./RScript/CoinPlot_v01.R")
-install.packages("png", repos = "https://cran.ism.ac.jp/")
 ```
 
 ```{r Fig01, fig.cap = "", echo = FALSE}
