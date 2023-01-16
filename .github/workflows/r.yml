@@ -35,7 +35,7 @@ jobs:
         git pull
      #  git checkout -b $LOCAL_BRANCH_NAME
     - name: Build
-    id: build_step
+      id: build_step
       run: |
         Rscript -e 'system("pip install pandoc"); install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/")'
         Rscript -e 'rmarkdown::render("Crypto.Rmd")'
