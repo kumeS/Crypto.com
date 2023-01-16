@@ -15,8 +15,8 @@ env:
 jobs:
     build:
       name: run test job
-        runs-on: ubuntu-latest
-        container: rocker/ml:4.1.1
+      runs-on: ubuntu-latest
+      container: rocker/ml:4.1.1
       steps:
         - uses: actions/checkout@v3
         - uses: r-lib/actions/setup-r@v2
