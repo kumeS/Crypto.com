@@ -27,10 +27,27 @@ jobs:
         git fetch          
     - name: Clean up
       run: |
-        git branch -d $LOCAL_BRANCH_NAME
-    - run: 
+      #  git branch -d $LOCAL_BRANCH_NAME
+    - name: Checkout
+      run: |
+        git fetch
+        git checkout $BASE_BRANCH_NAME
+        git pull
+     #  git checkout -b $LOCAL_BRANCH_NAME
+    - name: Build
+    id: build_step
+      run: |
         Rscript -e 'system("pip install pandoc"); install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/")'
         Rscript -e 'rmarkdown::render("Crypto.Rmd")'
+    - name: Commit
+      run: |
+        git add .
+        git commit -m 'Generated static html files'
+        git push -f origin $LOCAL_BRANCH_NAME:$HOSTING_BRANCH_NAME
+    - name: Teardown when the workflow failed
+      if: failure() && steps.build_step.outcome == 'failure'
+      run: |
+        git stash -u
 
 
         
