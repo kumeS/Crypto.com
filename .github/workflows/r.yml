@@ -13,7 +13,7 @@ env:
   LOCAL_BRANCH_NAME: gh-pages-local
   
 jobs:
-    unit-test-job:
+    Build-and-deploy:
       name: run test job
       runs-on: macos-latest
       steps:
