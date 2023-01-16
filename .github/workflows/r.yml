@@ -13,9 +13,8 @@ env:
   LOCAL_BRANCH_NAME: gh-pages-local
   
 jobs:
-  unit-test-job:
-    name: run test job
-    runs-on: macos-latest
+  Build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
