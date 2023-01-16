@@ -13,15 +13,36 @@ env:
   LOCAL_BRANCH_NAME: gh-pages-local
   
 jobs:
-    unit-test-job:
+    Build-and-deploy:
       name: run test job
-      runs-on: macos-latest
+      runs-on: ubuntu-latest
+      container: rocker/ml:4.1.1
       steps:
         - uses: actions/checkout@v3
         - uses: r-lib/actions/setup-r@v2
           with:
               r-version: '4.2.2'
-        - run: 
-              Rscript -e 'system("pip install pandoc"); install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/")'
+      - name: Setup git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          cd $GITHUB_WORKSPACE
+          git fetch
+      - name: Clean up
+        continue-on-error: true
+        run: |
+          git branch -d $LOCAL_BRANCH_NAME
+            - name: Checkout
+        run: |
+          git fetch
+          git checkout $BASE_BRANCH_NAME
+          git pull
+          git checkout -b $LOCAL_BRANCH_NAME  
+      - name: Build
+        id: build_step
+        run: |
+              Rscript -e 'install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/")'
               Rscript -e 'rmarkdown::render("Crypto.Rmd")'
+
+
 
