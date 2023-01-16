@@ -1,0 +1,65 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Run
+
+```{r, include=FALSE}
+source("./RScript/CoinPlot_v01.R")
+install.packages("png", repos = "https://cran.ism.ac.jp/")
+```
+
+```{r Fig01, fig.cap = "", echo = FALSE}
+plot(1:10, 1:10, type="n", axes = FALSE, xlab="", ylab="")
+a <- png::readPNG("Coinplot_1.png", native = F)
+a <- as.raster(a[,,1:3])
+rasterImage(a, 1, 1, 10, 10)
+```
+
+```{r Fig02, fig.cap = "", echo = FALSE}
+plot(1:10, 1:10, type="n", axes = FALSE, xlab="", ylab="")
+a <- png::readPNG("Coinplot_2.png", native = F)
+a <- as.raster(a[,,1:3])
+rasterImage(a, 1, 1, 10, 10)
+```
+
+```{r Fig03, fig.cap = "", echo = FALSE}
+plot(1:10, 1:10, type="n", axes = FALSE, xlab="", ylab="")
+a <- png::readPNG("Coinplot_3.png", native = F)
+a <- as.raster(a[,,1:3])
+rasterImage(a, 1, 1, 10, 10)
+```
+
+```{r Fig04, fig.cap = "", echo = FALSE}
+plot(1:10, 1:10, type="n", axes = FALSE, xlab="", ylab="")
+a <- png::readPNG("Coinplot_4.png", native = F)
+a <- as.raster(a[,,1:3])
+rasterImage(a, 1, 1, 10, 10)
+```
+
+```{r Fig05, fig.cap = "", echo = FALSE}
+plot(1:10, 1:10, type="n", axes = FALSE, xlab="", ylab="")
+a <- png::readPNG("Coinplot_5.png", native = F)
+a <- as.raster(a[,,1:3])
+rasterImage(a, 1, 1, 10, 10)
+```
+
+```{r Fig06, fig.cap = "", echo = FALSE}
+plot(1:10, 1:10, type="n", axes = FALSE, xlab="", ylab="")
+a <- png::readPNG("Coinplot_6.png", native = F)
+a <- as.raster(a[,,1:3])
+rasterImage(a, 1, 1, 10, 10)
+```
+
+```{r Fig07, fig.cap = "", echo = FALSE}
+plot(1:10, 1:10, type="n", axes = FALSE, xlab="", ylab="")
+a <- png::readPNG("Coinplot_7.png", native = F)
+a <- as.raster(a[,,1:3])
+rasterImage(a, 1, 1, 10, 10)
+```
+
+
+
+
