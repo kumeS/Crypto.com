@@ -26,9 +26,8 @@ jobs:
         cd $GITHUB_WORKSPACE
         git fetch          
     - name: Clean up
-        continue-on-error: true
-        run: |
-          git branch -d $LOCAL_BRANCH_NAME
+      run: |
+        git branch -d $LOCAL_BRANCH_NAME
     - run: 
         Rscript -e 'system("pip install pandoc"); install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/")'
         Rscript -e 'rmarkdown::render("Crypto.Rmd")'
