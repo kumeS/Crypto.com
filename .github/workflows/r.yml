@@ -7,47 +7,33 @@ on:
     - cron: '0 23 * * *'
   workflow_dispatch:
 
-env:
-  BASE_BRANCH_NAME: main
-  HOSTING_BRANCH_NAME: gh-pages
-  LOCAL_BRANCH_NAME: gh-pages-local
-  
 jobs:
-  Build-and-deploy:
+  render_document:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
     - uses: r-lib/actions/setup-r@v2
-    - name: Setup git
-      run: |
-        git config user.name "GitHub Actions Bot"
-        git config user.email "<>"
-        cd $GITHUB_WORKSPACE
-        git fetch          
-    - name: Clean up
-      run: |
-      #  git branch -d $LOCAL_BRANCH_NAME
-    - name: Checkout
-      run: |
-        git fetch
-        git checkout $BASE_BRANCH_NAME
-        git pull
-     #  git checkout -b $LOCAL_BRANCH_NAME
-    - name: Build
-      id: build_step
-      run: |
-        Rscript -e 'system("pip install pandoc"); install.packages(c("png", "rmarkdown"), repos = "https://cran.ism.ac.jp/")'
-        Rscript -e 'rmarkdown::render("Crypto.Rmd")'
-    - name: Commit
-      run: |
-        git add .
-        git commit -m 'Generated static html files'
-        git push -f origin $LOCAL_BRANCH_NAME:$HOSTING_BRANCH_NAME
-    - name: Teardown when the workflow failed
-      if: failure() && steps.build_step.outcome == 'failure'
-      run: |
-        git stash -u
+    - name: Render document
+      uses: lc5415/rmarkdown-action@v1
+      with:
+        input_file: Crypto.Rmd
+	    output_format: html_document
+    - name: Commit files
+        run: |
+          git config --local core.autocrlf false
+          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --local user.name "${{ github.actor }}"
+          git add . && git add --renormalize .
+          git pull origin ${{ github.head_ref }} --autostash --rebase -X ours
+          git commit --allow-empty -am "AUTO-GH ACTION: ${{ github.workflow }}"
+          NO_PAGER=1 git --no-pager diff HEAD^
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: ${{ github.head_ref }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
 
 
         
